@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+
+    :root {
+      --primary: #1A120B;
+      --secondary: #f7f7ff;
+      --third: #D5CEA3;
+      --choco: #3C2A21;
+      --font-primary: 'Montserrat', 'Quicksand', sans-serif;
+      --font-code: 'Courier Prime', monospace;
+      --white: #fff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      color: var(--primary);
+      font-family: var(--font-primary);
+      font-weight: 500;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      padding: 32px;
+      flex: 1;
+    }
+
+    .nav-bar {
+      display: none;
+    }
+
+    .content__header {
+      font-weight: 600;
+      font-size: 1.75em;
+      margin-bottom: 32px;
+    }
+
+    .base-url-wrapper h3 {
+      font-size: 1.5em;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .base-url-wrapper__link {
+      margin-bottom: 32px;
+    }
+
+    .base-url-wrapper__link a {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: var(--choco);
+    }
+
+    .endpoints h3 {
+      font-size: 1.5em;
+      margin-bottom: 32px;
+      font-weight: 600;
+    }
+
+    .endpoint h5 {
+      font-size: 1.2em;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .endpoint__desc {
+      font-size: 1em;
+      border-left: 5px solid var(--choco);
+      padding: 4px 18px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.5);
+      margin-bottom: 18px;
+    }
+
+    .endpoint__detail {
+      margin-left: 36px;
+    }
+
+    .endpoint__detail li {
+      margin-bottom: 8px;
+      font-size: 0.8em;
+    }
+
+    .endpoint__detail span {
+      background-color: var(--third);
+      color: var(--choco);
+      padding: 2px 4px;
+      font-weight: 500;
+      font-family: var(--font-code);
+    }
+
+    .endpoint__response {
+      overflow: scroll;
+      font-size: 0.75em;
+      background-color: var(--secondary);
+      padding: 8px;
+      margin-bottom: 32px;
+    }
+
+    .endpoint__response__second-indent {
+      text-indent: 0.5cm;
+    }
+
+    .endpoint__response__third-indent {
+      text-indent: 1cm;
+    }
+
+    .endpoint__response__fourth-indent {
+      text-indent: 1.5cm;
+      white-space: nowrap;
+    }
+
+    .endpoint__response p {
+      font-family: var(--font-code);
+
+    }
+
+    footer {
+      background-color: var(--primary);
+      padding: 16px;
+    }
+
+    footer p {
+      color: var(--white);
+      font-weight: 600;
+      text-align: center;
+      font-size: 0.9em;
+    }
+
+    @media screen and (min-width: 768px) {
+      .wrapper {
+        display: flex;
+        gap: 7%;
+      }
+
+      .nav-bar {
+        display: block;
+        width: 23%;
+
+      }
+
+      .nav-bar ul {
+        list-style-type: none;
+        position: sticky;
+        top: 0;
+      }
+
+      .nav-bar ul li a:hover {
+        color: var(--choco);
+      }
+
+      .nav-bar ul li {
+        font-size: 0.8em;
+        margin-bottom: 8px;
+      }
+
+      .nav-bar__brand a {
+        font-size: 1em;
+      }
+
+      .nav-bar__link__inner {
+        text-indent: 0.5cm;
+      }
+
+      .nav-bar__link__inner a {
+        font-size: 0.8em;
+      }
+
+      .nav-bar ul li a {
+        text-decoration: none;
+      }
+
+      .content {
+        width: 68%;
+      }
+
+      .active {
+        border-right: 5px solid var(--choco);
+      }
+    }
+
+    @media screen and (min-width: 1280px) {
+      .wrapper {
+        max-width: 1280px;
+        margin: 0 auto;
+        gap: 5%;
+      }
+
+      .nav-bar ul li {
+        font-size: 0.9em;
+      }
+
+      .nav-bar__brand a {
+        font-size: 1.1em;
+      }
+
+      .nav-bar__link__inner a {
+        font-size: 0.9em;
+      }
+
+      .nav-bar {
+        width: 20%;
+      }
+
+      .content {
+        width: 75%;
+      }
+    }
+  </style>
+
+  <title>Polivenol - Product API Documentation</title>
+</head>
+
+<body>
+  <main>
+    <div class="wrapper">
+      <nav class="nav-bar">
+        <ul>
+          <li class="nav-bar__brand"><a href="#title">Polivenol - Product API</a></li>
+          <li class="nav-bar__link"><a href="#baseUrl">Base URL</a></li>
+          <li>Endpoints</li>
+          <li class="nav-bar__link__inner"><a href="#getProduct">Get All Products</a></li>
+          <li class="nav-bar__link__inner"><a href="#addProduct">Add Product</a></li>
+          <li class="nav-bar__link__inner"><a href="#getDetailProduct">Get Detail Product</a></li>
+          <li class="nav-bar__link__inner"><a href="#editProduct">Edit Product</a></li>
+          <li class="nav-bar__link__inner"><a href="#deleteProduct">Delete Product</a></li>
+        </ul>
+      </nav>
+      <div class="content">
+        <h1 class="content__header" id="title">Polivenol - Product API</h1>
+        <div class="base-url-wrapper" id="baseUrl">
+          <h3>Base URL</h3>
+          <p class="base-url-wrapper__link"><a href="">http://localhost:8000/</a></p>
+        </div>
+        <div class="endpoints">
+          <h3>Endpoints</h3>
+          <div class="endpoint" id="getProduct">
+            <h5>Get All Product</h5>
+            <p class="endpoint__desc">Mendapatkan semua produk</p>
+            <ul class="endpoint__detail">
+              <li>URL: <span>/products</span></li>
+              <li>Method: <span>GET</span></li>
+              <li>Response:</li>
+            </ul>
+            <div class="endpoint__response">
+              <p class="endpoint__response__first-indent">{</p>
+              <p class="endpoint__response__second-indent">"status": success</p>
+              <p class="endpoint__response__second-indent">"total": 5</p>
+              <p class="endpoint__response__second-indent">"products": [</p>
+              <p class="endpoint__response__third-indent">{</p>
+              <div class="endpoint__response__fourth-indent">
+                <p>"id": "D9eZBQin_QLW6Mz3",</p>
+                <p>"title": "Es Kopi Susu Gula Aren",</p>
+                <p>"image": "https://i.pinimg.com/564x/10/8d/4d/108d4dc285b5ee49addf46b51bb189f7.jpg",</p>
+                <p>"desc": "Es kopi susu kekinian (kadang disebut es kopi susu gula aren) adalah istilah untuk mencakup jenis racikan kopi yang mengandung susu dan gula aren. Racikan ini umumnya disajikan dingin dengan es dalam kemasan gelas plastik bertutup."</p>
+                <p>"tokopedia": "-",</p>
+                <p>"instagram": "https://www.instagram.com/polivenol_roastery/",</p>
+                <p>"location": "Kantin RIK (Rumpun Ilmu Kesehatan) UI",</p>
+                <p>"insertedAt": "2023-07-06T04:08:36.558Z",</p>
+                <p>"updatedAt": "2023-07-06T04:08:36.558Z"</p>
+                <p>"productType": "Beverages"</p>
+              </div>
+              <p class="endpoint__response__third-indent">},</p>
+              <p class="endpoint__response__third-indent">{</p>
+              <div class="endpoint__response__fourth-indent">
+                <p>"id": "D9eZBQin_QLW6Mz3",</p>
+                <p>"title": "Es Kopi Susu Gula Aren",</p>
+                <p>"image": "https://i.pinimg.com/564x/10/8d/4d/108d4dc285b5ee49addf46b51bb189f7.jpg",</p>
+                <p>"desc": "Es kopi susu kekinian (kadang disebut es kopi susu gula aren) adalah istilah untuk mencakup jenis racikan kopi yang mengandung susu dan gula aren. Racikan ini umumnya disajikan dingin dengan es dalam kemasan gelas plastik bertutup."</p>
+                <p>"tokopedia": "-",</p>
+                <p>"instagram": "https://www.instagram.com/polivenol_roastery/",</p>
+                <p>"location": "Kantin RIK (Rumpun Ilmu Kesehatan) UI",</p>
+                <p>"insertedAt": "2023-07-06T04:08:36.558Z",</p>
+                <p>"updatedAt": "2023-07-06T04:08:36.558Z"</p>
+                <p>"productType": "Beverages"</p>
+              </div>
+              <p class="endpoint__response__third-indent">},</p>
+              <p class="endpoint__response__third-indent">...</p>
+              <p class="endpoint__response__second-indent">]</p>
+              <p class="endpoint__response__first-indent">}</p>
+            </div>
+          </div>
+          <div class="endpoint" id="addProduct">
+            <h5>Add Product</h5>
+            <p class="endpoint__desc">Menambahkan produk</p>
+            <ul class="endpoint__detail">
+              <li>URL: <span>/products</span></li>
+              <li>Method: <span>POST</span></li>
+              <li>Response:</li>
+            </ul>
+            <div class="endpoint__response">
+              <p class="endpoint__response__first-indent">{</p>
+              <p class="endpoint__response__second-indent">"status": success</p>
+              <p class="endpoint__response__second-indent">"message": Produk berhasil ditambahkan</p>
+              <p class="endpoint__response__second-indent">"data": {</p>
+              <div class="endpoint__response__third-indent">
+                <p>"id": "D9eZBQin_QLW6Mz3",</p>
+              </div>
+              <p class="endpoint__response__second-indent">}</p>
+              <p class="endpoint__response__first-indent">}</p>
+            </div>
+          </div>
+          <div class="endpoint" id="getDetailProduct">
+            <h5>Get Detail Product</h5>
+            <p class="endpoint__desc">Mendapatkan detail produk</p>
+            <ul class="endpoint__detail">
+              <li>URL: <span>/products/{id}</span></li>
+              <li>Method: <span>GET</span></li>
+              <li>Response:</li>
+            </ul>
+            <div class="endpoint__response">
+              <p class="endpoint__response__first-indent">{</p>
+              <p class="endpoint__response__second-indent">"status": success</p>
+              <p class="endpoint__response__second-indent">"productDetail": {</p>
+              <div class="endpoint__response__fourth-indent">
+                <p>"id": "D9eZBQin_QLW6Mz3",</p>
+                <p>"title": "Es Kopi Susu Gula Aren",</p>
+                <p>"image": "https://i.pinimg.com/564x/10/8d/4d/108d4dc285b5ee49addf46b51bb189f7.jpg",</p>
+                <p>"desc": "Es kopi susu kekinian (kadang disebut es kopi susu gula aren) adalah istilah untuk mencakup jenis racikan kopi yang mengandung susu dan gula aren. Racikan ini umumnya disajikan dingin dengan es dalam kemasan gelas plastik bertutup."</p>
+                <p>"tokopedia": "-",</p>
+                <p>"instagram": "https://www.instagram.com/polivenol_roastery/",</p>
+                <p>"location": "Kantin RIK (Rumpun Ilmu Kesehatan) UI",</p>
+                <p>"insertedAt": "2023-07-06T04:08:36.558Z",</p>
+                <p>"updatedAt": "2023-07-06T04:08:36.558Z"</p>
+                <p>"productType": "Beverages"</p>
+              </div>
+              <p class="endpoint__response__second-indent">}</p>
+              <p class="endpoint__response__first-indent">}</p>
+            </div>
+          </div>
+          <div class="endpoint" id="editProduct">
+            <h5>Edit Product</h5>
+            <p class="endpoint__desc">Memperbarui detail produk</p>
+            <ul class="endpoint__detail">
+              <li>URL: <span>/products/{id}</span></li>
+              <li>Method: <span>PUT</span></li>
+              <li>Response:</li>
+            </ul>
+            <div class="endpoint__response">
+              <p class="endpoint__response__first-indent">{</p>
+              <p class="endpoint__response__second-indent">"status": success</p>
+              <p class="endpoint__response__second-indent">"message": Produk berhasil diperbarui</p>
+              <p class="endpoint__response__first-indent">}</p>
+            </div>
+          </div>
+          <div class="endpoint" id="deleteProduct">
+            <h5>Delete Product</h5>
+            <p class="endpoint__desc">Menghapus produk</p>
+            <ul class="endpoint__detail">
+              <li>URL: <span>/products/{id}</span></li>
+              <li>Method: <span>DELETE</span></li>
+              <li>Response:</li>
+            </ul>
+            <div class="endpoint__response">
+              <p class="endpoint__response__first-indent">{</p>
+              <p class="endpoint__response__second-indent">"status": success</p>
+              <p class="endpoint__response__second-indent">"message": Produk berhasil dihapus</p>
+              <p class="endpoint__response__first-indent">}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>Copyright Polivenol 2023. All RIghts Reserved</p>
+  </footer>
+
+  <script>
+    const header = document.querySelector('.nav-bar__brand');
+    const baseUrl = document.querySelector('.nav-bar__link');
+    const getProduct = document.getElementsByClassName('nav-bar__link__inner')[0];
+    const addProduct = document.getElementsByClassName('nav-bar__link__inner')[1];
+    const editProduct = document.getElementsByClassName('nav-bar__link__inner')[2];
+    const deleteProduct = document.getElementsByClassName('nav-bar__link__inner')[3];
+
+    const addActive = (target) => {
+      target.classList.add('active');
+    }
+
+    const removeActive = (target) => {
+      target.classList.remove('active');
+    }
+
+    window.addEventListener('scroll', (event) => {
+      let scroll = this.scrollY;
+      if (scroll < 91) {
+        addActive(header);
+        removeActive(baseUrl)
+        removeActive(getProduct)
+        removeActive(addProduct)
+        removeActive(editProduct)
+        removeActive(deleteProduct)
+      }
+
+      if (scroll >= 62) {
+        removeActive(header);
+        addActive(baseUrl)
+        removeActive(getProduct)
+        removeActive(addProduct)
+        removeActive(editProduct)
+        removeActive(deleteProduct)
+      }
+
+      if (scroll >= 225) {
+        removeActive(header);
+        removeActive(baseUrl)
+        addActive(getProduct)
+        removeActive(addProduct)
+        removeActive(editProduct)
+        removeActive(deleteProduct)
+      }
+
+      if (scroll >= 390) {
+        removeActive(header);
+        removeActive(baseUrl)
+        removeActive(getProduct)
+        addActive(addProduct)
+        removeActive(editProduct)
+        removeActive(deleteProduct)
+      }
+
+      if (scroll >= 836) {
+        removeActive(header);
+        removeActive(baseUrl)
+        removeActive(getProduct)
+        removeActive(addProduct)
+        removeActive(editProduct)
+        addActive(deleteProduct)
+      }
+    })
+  </script>
+</body>
+
+</html>
